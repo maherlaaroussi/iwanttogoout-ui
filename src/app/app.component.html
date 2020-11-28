@@ -1,9 +1,6 @@
 <app-toolbar hidden></app-toolbar>
 
 <div class="content" role="main">
-  <app-welcome *ngIf="isServerOnline && !isAuth"></app-welcome>
-  <app-server-offline *ngIf="!isServerOnline"></app-server-offline>
-  <app-game *ngIf="isAuth"></app-game>
+  <router-outlet></router-outlet>
 </div>
 
-<router-outlet></router-outlet>

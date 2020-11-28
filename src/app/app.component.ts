@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ApiService } from './api.service';
+import { RouterModule } from '@angular/router';
+import { GameService } from './game.service';
 
 @Component({
   selector: 'app-root',
@@ -11,21 +12,13 @@ export class AppComponent {
   playerName = "";
   isServerOnline = false;
   isAuth = false;
-  players: any;
 
-  constructor(private apiService: ApiService) { }
+  constructor(private gameService: GameService) { }
+
+  response: any;
 
   ngOnInit(): void {
-    try {
-      this.apiService.getPlayers().subscribe(
-        (data) => {
-          console.log(data);
-          this.players = data;
-          this.isServerOnline = true;
-      });
-    } catch (error) {
-      this.isServerOnline = false;
-    }
+    if(!this.gameService.isServerOnline()) { }
   }
 
 }

@@ -10,6 +10,16 @@ import { from } from 'rxjs';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { ServerOfflineComponent } from './server-offline/server-offline.component';
 import { GameComponent } from './game/game.component';
+import { AuthComponent } from './auth/auth.component';
+import { GameViewComponent } from './game-view/game-view.component';
+import { RouterModule, Routes } from '@angular/router';
+
+const appRoutes: Routes = [
+  { path: 'game', component: GameViewComponent},
+  { path: 'start', component: WelcomeComponent},
+  { path: 'offline', component: ServerOfflineComponent},
+  { path: '', component: WelcomeComponent}
+];
 
 @NgModule({
   declarations: [
@@ -17,13 +27,16 @@ import { GameComponent } from './game/game.component';
     ToolbarComponent,
     WelcomeComponent,
     ServerOfflineComponent,
-    GameComponent
+    GameComponent,
+    AuthComponent,
+    GameViewComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [],
   bootstrap: [AppComponent]

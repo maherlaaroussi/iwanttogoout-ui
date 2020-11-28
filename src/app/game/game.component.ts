@@ -14,7 +14,6 @@ export class GameComponent implements OnInit {
 
   ngOnInit(): void {
     this.apiService.getPlayers().subscribe((data)=>{
-      console.log(data);
       this.players = data;
     });
   }

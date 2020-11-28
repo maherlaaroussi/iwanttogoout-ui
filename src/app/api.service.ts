@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ApiService {
 
-  server: string = "http://localhost:8080/api";
+  server: string = "http://localhost:4200/api";
 
   constructor(private httpClient: HttpClient) { }
 
@@ -15,7 +15,7 @@ export class ApiService {
   }
 
   public getMap(){
-    return this.httpClient.get(this.server + 'http://localhost:8080/api/map');
+    return this.httpClient.get(this.server + '/map');
   }
 
 }
