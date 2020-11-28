@@ -18,4 +18,8 @@ export class ApiService {
     return this.httpClient.get(this.server + '/map');
   }
 
+  public postPlayer(name: string){
+    return this.httpClient.post(this.server + '/joueurs/' + name, "");
+  }
+
 }

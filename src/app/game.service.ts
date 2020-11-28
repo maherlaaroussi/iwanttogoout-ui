@@ -21,4 +21,18 @@ export class GameService {
     return false;
   }
 
+  public newPlayer(name: string){
+    if(!name) { return false; }
+    try {
+      this.apiService.postPlayer(name).subscribe(
+        (data) => {
+          if(data != null) { return ""; }
+          else return false;
+      });
+    } catch (error) {
+      return false;
+    }
+    return false;
+  }
+
 }

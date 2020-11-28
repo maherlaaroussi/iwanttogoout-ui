@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { GameService } from './game.service';
 
 @Component({
@@ -13,12 +13,13 @@ export class AppComponent {
   isServerOnline = false;
   isAuth = false;
 
-  constructor(private gameService: GameService) { }
+  constructor(private gameService: GameService, private router: Router) { }
 
   response: any;
 
   ngOnInit(): void {
-    if(!this.gameService.isServerOnline()) { }
+    // If server is not online, navigate to offline page
+    if(!this.gameService.isServerOnline()) { this.router.navigate(['/', 'offline']); }
   }
 
 }
