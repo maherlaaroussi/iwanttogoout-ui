@@ -7,12 +7,8 @@ import { ApiService } from '../services/api.service';
 export class GameService {
 
   isAuth = false;
-
-  player = {
-    name: '',
-    life: 0,
-    position: [0, 0]
-  };
+  isDead = false;
+  player = '';
 
   constructor(private apiService: ApiService) { }
 
@@ -33,10 +29,57 @@ export class GameService {
     if(!name) { return false; }
     try {
       this.apiService.postPlayer(name).subscribe(
-        (data) => {
+        (data: any) => {
           if(data != null) {
             this.isAuth = true;
-            return "";
+            return String(data.name);
+          }
+          else return false;
+      });
+    } catch (error) {
+      return false;
+    }
+    return false;
+  }
+
+  public getPlayer(name: string){
+    if(!name) { return false; }
+    try {
+      this.apiService.getPlayer(name).subscribe(
+        (data) => {
+          if(data != null) {
+            return data;
+          }
+          else return false;
+      });
+    } catch (error) {
+      return false;
+    }
+    return false;
+  }
+
+  public getMap(){
+    try {
+      this.apiService.getMap().subscribe(
+        (data) => {
+          if(data != null) {
+            return data;
+          }
+          else return false;
+      });
+    } catch (error) {
+      return false;
+    }
+    return false;
+  }
+
+  public isPlayerDead(){
+    try {
+      this.apiService.getPlayer(this.player).subscribe(
+        (data: any) => {
+          if(data != null) {
+            if(Number(data['life']) > 0) { return false; }
+            return true;
           }
           else return false;
       });

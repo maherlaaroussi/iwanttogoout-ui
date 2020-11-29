@@ -14,6 +14,10 @@ export class ApiService {
     return this.httpClient.get(this.server + '/joueurs');
   }
 
+  public getPlayer(naùe: string){
+    return this.httpClient.get(this.server + '/joueurs/' + name);
+  }
+
   public getMap(){
     return this.httpClient.get(this.server + '/map');
   }
