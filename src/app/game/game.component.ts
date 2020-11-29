@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../api.service';
+import { Router, RouterModule } from '@angular/router';
+import { GameService } from '../services/game.service';
 
 @Component({
   selector: 'app-game',
@@ -8,14 +9,13 @@ import { ApiService } from '../api.service';
 })
 export class GameComponent implements OnInit {
 
-  players: any;
+  isAuth = false;
 
-  constructor(private apiService: ApiService) { }
+  constructor(private gameService: GameService, private router: Router) { }
 
   ngOnInit(): void {
-    this.apiService.getPlayers().subscribe((data)=>{
-      this.players = data;
-    });
+    this.isAuth = this.gameService.isAuth;
+    if(!this.isAuth) { this.router.navigate(['/', 'start']); }
   }
 
 }

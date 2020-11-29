@@ -1,10 +1,18 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './api.service';
+import { ApiService } from '../services/api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
+
+  isAuth = false;
+
+  player = {
+    name: '',
+    life: 0,
+    position: [0, 0]
+  };
 
   constructor(private apiService: ApiService) { }
 
@@ -26,7 +34,10 @@ export class GameService {
     try {
       this.apiService.postPlayer(name).subscribe(
         (data) => {
-          if(data != null) { return ""; }
+          if(data != null) {
+            this.isAuth = true;
+            return "";
+          }
           else return false;
       });
     } catch (error) {
