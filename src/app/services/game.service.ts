@@ -12,81 +12,57 @@ export class GameService {
 
   constructor(private apiService: ApiService) { }
 
-  public isServerOnline(){
-    try {
-      this.apiService.getMap().subscribe(
-        (data) => {
-          if(data != null) { return true; }
-          else return false;
-      });
-    } catch (error) {
-      return false;
-    }
-    return false;
+  public async isServerOnline() {
+    let res = await this.apiService.getMap().catch((res) => { return false; });
+    if(res) return true;
+    else return false;
   }
 
-  public newPlayer(name: string){
+  public async newPlayer(name: string) {
     if(!name) { return false; }
-    try {
-      this.apiService.postPlayer(name).subscribe(
-        (data: any) => {
-          if(data != null) {
-            this.isAuth = true;
-            return String(data.name);
-          }
-          else return false;
-      });
-    } catch (error) {
+    let res: any = await this.apiService.postPlayer(name).catch((res) => { return false; });
+    if(res) {
+      this.isAuth = true;
+      return res['name'];
+    }
+    else {
+      this.isAuth = false;
       return false;
     }
-    return false;
   }
 
-  public getPlayer(name: string){
+  public async getPlayer(name: string) {
     if(!name) { return false; }
-    try {
-      this.apiService.getPlayer(name).subscribe(
-        (data) => {
-          if(data != null) {
-            return data;
-          }
-          else return false;
-      });
-    } catch (error) {
-      return false;
+    let res: any = await this.apiService.getPlayer(name).catch((res) => { return false; });
+    if(res) {
+      return res;
     }
-    return false;
+    else return false;
   }
 
-  public getMap(){
-    try {
-      this.apiService.getMap().subscribe(
-        (data) => {
-          if(data != null) {
-            return data;
-          }
-          else return false;
-      });
-    } catch (error) {
-      return false;
+  public async getMap() {
+    let res: any = await this.apiService.getPlayer(name).catch((res) => { return false; });
+    if(res) {
+      return res;
     }
-    return false;
+    else return false;
   }
 
-  public isPlayerDead(){
-    try {
-      this.apiService.getPlayer(this.player).subscribe(
-        (data: any) => {
-          if(data != null) {
-            if(Number(data['life']) > 0) { return false; }
-            return true;
-          }
-          else return false;
-      });
-    } catch (error) {
+  public async isPlayerDead() {
+    let res: any = await this.apiService.getPlayer(name).catch((res) => { return false; });
+    if(Number(res['life']) > 0) {
       return false;
     }
-    return false;
+    else return true;
+  }
+
+  public signOut() {
+    this.isAuth = false;
+  }
+
+  public signIn(name: string) {
+    this.isAuth = true;
+    this.player = name;
   }
 
 }

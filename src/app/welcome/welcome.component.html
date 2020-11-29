@@ -3,5 +3,5 @@
 
   <div class="space"></div>
 
-  <input type="text" class="form-control margin-auto" placeholder="Nom du joueur">
-  <button  class="margin-auto" (click)="onPlay()">Jouer</button>
+  <input #namePlayer type="text" class="form-control margin-auto" placeholder="Nom du joueur">
+  <button type="submit" class="margin-auto" (click)="onPlay(namePlayer.value)">Jouer</button>

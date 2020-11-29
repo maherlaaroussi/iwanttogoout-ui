@@ -19,7 +19,9 @@ export class AppComponent {
 
   ngOnInit(): void {
     // If server is not online, navigate to offline page
-    if(!this.gameService.isServerOnline()) { this.router.navigate(['/', 'offline']); }
+    if(!this.gameService.isServerOnline()) {
+      this.router.navigate(['/', 'offline']);
+    }
   }
 
 }

@@ -11,14 +11,13 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { ServerOfflineComponent } from './server-offline/server-offline.component';
 import { GameComponent } from './game/game.component';
 import { AuthComponent } from './auth/auth.component';
-import { GameViewComponent } from './game-view/game-view.component';
 import { RouterModule, Routes } from '@angular/router';
 
 import { GameService } from './services/game.service';
 import { ApiService } from './services/api.service';
 
 const appRoutes: Routes = [
-  { path: 'game', component: GameViewComponent},
+  { path: 'game', component: GameComponent},
   { path: 'start', component: WelcomeComponent},
   { path: 'offline', component: ServerOfflineComponent},
   { path: '', component: WelcomeComponent}
@@ -32,7 +31,7 @@ const appRoutes: Routes = [
     ServerOfflineComponent,
     GameComponent,
     AuthComponent,
-    GameViewComponent
+    GameComponent
   ],
   imports: [
     BrowserModule,

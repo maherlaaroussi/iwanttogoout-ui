@@ -13,11 +13,9 @@ export class GameComponent implements OnInit {
 
   constructor(private gameService: GameService, private router: Router) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.isAuth = this.gameService.isAuth;
-
-    // If there is no player, redirect to start
-    if(!this.isAuth) { this.router.navigate(['/', 'start']); }
+    if(!this.isAuth) { this.router.navigate(['/']); }
   }
 
 }
