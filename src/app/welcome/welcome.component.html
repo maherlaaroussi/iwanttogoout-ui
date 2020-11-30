@@ -1,7 +1,12 @@
-<h2>Bienvenu dans le labyrinthe !</h2>
-  <p>Prêt pour souffrir ?</p>
+<div class="container flex-center text-center justify-content-center margin-auto">
+  <h2>Bienvenu dans le labyrinthe !</h2>
+    <p>Prêt pour souffrir ?</p>
 
-  <div class="space"></div>
+    <div class="space"></div>
 
-  <input #namePlayer type="text" class="form-control margin-auto" placeholder="Nom du joueur">
-  <button type="submit" class="margin-auto" (click)="onPlay(namePlayer.value)">Jouer</button>
+    <input #player type="text" class="form-control margin-auto input" placeholder="Nom du joueur">
+    <button type="submit" class="margin-auto" (click)="onPlay(player.value)">Jouer</button>
+
+
+    <p *ngIf="error">{{ message }}</p>
+</div>

@@ -5,6 +5,16 @@ body{
   font-size: 14px;
 }
 
+.center-c {
+  background-color: transparent;
+  justify-content: center;
+  margin: 10%;
+  top: 25%;
+  text-align: center;
+  align-items: center;
+}
+
+
 .margin-auto  {
   margin: 0 auto 16px;
 }
@@ -13,16 +23,16 @@ body{
   margin: 50px;
 }
 
-input {
+input.input {
   border-radius: 4px;
   border: 1px solid #eee;
   color: white;
   background-color: transparent;
-  padding: 10px;
+  padding: 15px;
   align-items: center;
   transition: all 0.2s ease-in-out;
   line-height: 24px;
-  height: 10px;
+  height: 15px;
   width: 200px;
   text-align: center;
 }
@@ -41,6 +51,12 @@ button {
   height: 16px;
   width: 180px;
   cursor: pointer;
+}
+
+button:disabled {
+  border: 1px solid gray;
+  color: gray;
+  background-color: transparent;
 }
 
 button:hover {

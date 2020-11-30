@@ -15,11 +15,15 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { GameService } from './services/game.service';
 import { ApiService } from './services/api.service';
+import { PlayerDeadComponent } from './player-dead/player-dead.component';
+import { PlayerWinComponent } from './player-win/player-win.component';
 
 const appRoutes: Routes = [
   { path: 'game', component: GameComponent},
   { path: 'start', component: WelcomeComponent},
   { path: 'offline', component: ServerOfflineComponent},
+  { path: 'dead', component: PlayerDeadComponent},
+  { path: 'win', component: PlayerWinComponent},
   { path: '', component: WelcomeComponent}
 ];
 
@@ -31,7 +35,9 @@ const appRoutes: Routes = [
     ServerOfflineComponent,
     GameComponent,
     AuthComponent,
-    GameComponent
+    GameComponent,
+    PlayerDeadComponent,
+    PlayerWinComponent
   ],
   imports: [
     BrowserModule,

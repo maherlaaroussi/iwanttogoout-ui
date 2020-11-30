@@ -10,25 +10,38 @@ import { GameService } from '../services/game.service';
 export class WelcomeComponent implements OnInit {
 
   player: any;
+  error: boolean;
+  message: string;
 
-  constructor(private router: Router, private gameService: GameService) { }
+  constructor(private router: Router, private gameService: GameService) {
+    this.error = false;
+    this.message = '';
+   }
 
   async ngOnInit() {
     // If server is not online, redirect to offline page
     await this.gameService.isServerOnline().then((res) => {
-      if(!res) this.router.navigate(['/', 'offline']);
+      if(!res) {
+        this.router.navigate(['/', 'offline']);
+      }
     });
   }
 
-  onPlay(namePlayer: string): void {
+  async onPlay(namePlayer: string) {
     // Create new player
-    this.player = this.gameService.newPlayer(namePlayer);
+    this.player = await this.gameService.newPlayer(namePlayer);
 
     // Set authentification (very basic) and navigate to game view
-    if(!this.player['name']) {
-      this.gameService.isAuth = true;
-      this.gameService.player = this.player;
+    if(this.player) {
       this.router.navigate(['/', 'game']);
+    }
+    else if(namePlayer == '') {
+      this.error = true;
+      this.message = 'Nom de joueur incorrect.';
+    }
+    else {
+      this.error = true;
+      this.message = 'Le joueur ' + namePlayer + ' est déjà présent.';
     }
   }
 

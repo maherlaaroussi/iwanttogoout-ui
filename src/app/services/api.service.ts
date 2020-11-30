@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { RESOURCE_CACHE_PROVIDER } from '@angular/platform-browser-dynamic';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class ApiService {
     return await this.httpClient.get(this.server + '/joueurs').toPromise();
   }
 
-  public async getPlayer(naùe: string){
+  public async getPlayer(name: string){
     return await this.httpClient.get(this.server + '/joueurs/' + name).toPromise();
   }
 
@@ -25,6 +25,10 @@ export class ApiService {
 
   public async postPlayer(name: string){
     return await this.httpClient.post(this.server + '/joueurs/' + name, "").toPromise();
+  }
+
+  public async postPlayerMove(name: string, direction: string){
+    return await this.httpClient.post(this.server + '/joueurs/' + name + '/move?direction=' + direction, "").toPromise();
   }
 
 }
