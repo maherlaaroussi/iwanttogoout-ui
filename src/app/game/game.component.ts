@@ -16,9 +16,9 @@ interface Directions {
 })
 
 export class GameComponent implements OnInit {
-
   isAuth = false;
   message = '';
+  mapScreen: Boolean[][];
 
   showButtons = true;
   buttons: Directions = {
@@ -43,7 +43,31 @@ export class GameComponent implements OnInit {
   constructor(private gameService: GameService, private router: Router) {
     this.syncDataLoop();
     this.showButtons = true;
+    this.mapScreen = [];
+    this.resetMapScreen(false);
    }
+
+   private resetMapScreen(state: boolean) {
+    for(var i: number = 0; i < 5; i++) {
+      this.mapScreen[i] = [];
+      for(var j: number = 0; j< 5; j++) {
+          this.mapScreen[i][j] = state;
+      }
+    }
+   }
+
+   private setPosition(positionString: string) {
+     this.resetMapScreen(false);
+     let positionFormated = positionString.replace('(', '').replace(')', '').split(',');
+     this.mapScreen[Number(positionFormated[0])][Number(positionFormated[1])] = true;
+   }
+
+   private getRightPosition(positionString: string) {
+    let positionFormated = positionString.replace('(', '').replace(')', '').split(',');
+    let x = positionFormated[0];
+    let y = positionFormated[1];
+    // TODO: Calcul d'une formule pour obtenir la bonne position
+  }
 
   async ngOnInit() {
     this.isAuth = this.gameService.isAuth;
@@ -53,12 +77,14 @@ export class GameComponent implements OnInit {
     else {
       this.syncData();
     }
+    this.setPosition(this.player['position']);
   }
 
   async syncData() {
     await this.gameService.syncData().then((res) => { });
     this.player = this.gameService.player;
     this.map = this.gameService.map;
+    this.setPosition(this.player['position']);
   }
 
   private setButtons(state: boolean) {
@@ -75,12 +101,21 @@ export class GameComponent implements OnInit {
     this.showButtons = false;
   }
 
+  private win() {
+    this.message = 'Vous avez trouvé la sortie ! ...';
+    this.showButtons = false;
+    setTimeout(() => {
+      this.message = 'Une nouvelle partie commencera dans 6 secondes.';
+      this.router.navigate(['/game']);
+    }, 6);
+  }
+
   private dead() {
     this.message = 'Vous êtes mort inutilement ...';
     this.showButtons = false;
     setTimeout(() => {
       this.gameService.playerDead();
-  }, 1500);
+    }, 1500);
   }
 
   private showMessage(message: string, reset: boolean = false) {
@@ -112,10 +147,9 @@ export class GameComponent implements OnInit {
         this.showMessage('Déplacement : ' + direction.toUpperCase(), true);
         // Player have more life than before, so he found the exit
         if(Number(res['life']) > Number(this.player['life'])) {
-          this.showMessage('Vous avez trouvé la sortie !!.');
-          this.router.navigate(['/', 'win']);
+          this.win();
         }
-        if(res['life'] != this.player['life']) {
+        else if(res['life'] != this.player['life']) {
           if(Number(res['life']) == 0) {
             this.dead();
           }

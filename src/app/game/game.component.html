@@ -1,4 +1,6 @@
 <div class="container-fluid text-center">
+
+  <!-- Informations about the player -->
   <div class="row">
     <div class="col-lg-12 text-uppercase"><h2>{{ player['name'] }}</h2></div>
   </div>
@@ -10,6 +12,16 @@
     <div class="col-lg-12"><p>{{ message }}</p></div>
   </div>
 
+  <!-- MAP -->
+  <div class="map-all">
+    <div *ngFor="let y of [].constructor(6); let i=index" class="row">
+      <div *ngFor="let x of [].constructor(6); let j=index" id="case{{i}}-case{{j}}" class="col-lg-2 map">
+        <p *ngIf="mapScreen[i][j]">x</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Buttons for moving -->
   <div *ngIf="showButtons">
     <div class="row">
       <div class="col-lg-12"><button [disabled]="!buttons['nord']" class="margin-auto" (click)="onMove('nord')">Nord</button></div>
@@ -24,6 +36,7 @@
   </div>
 </div>
 
+<!-- Informations about the map -->
 <div class="container-fluid text-center">
   <div class="row">
     <div class="col-lg-3"><p>Joueurs<br />{{ map['players'] }}</p></div>
