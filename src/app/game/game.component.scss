@@ -33,3 +33,17 @@ button {
   margin: 0;
 }
 
+.click {
+  cursor: pointer;
+  position: relative;
+}
+
+.click:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 17px rgba(255, 255, 255, 0.35);
+}
+
+.players {
+  width: 400px;
+  justify-content: center;
+}

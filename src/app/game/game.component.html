@@ -5,11 +5,11 @@
     <div class="col-lg-12 text-uppercase"><h2>{{ player['name'] }}</h2></div>
   </div>
   <div class="row">
-    <div class="col-lg-6"><p>Position : {{ player['position'] }}</p></div>
+    <div class="col-lg-12"><p>Position : {{ player['position'] }}</p></div>
   </div>
 
   <!-- MAP -->
-  <div class="map-all">
+  <div class="map-all" *ngIf="showMap">
     <div *ngFor="let y of [].constructor(map['size']); let i=index" class="row">
       <div *ngFor="let x of [].constructor(map['size']); let j=index" class="col-lg-2 map">
         <span *ngIf="mapScreen[j][[].constructor(map['size']).length-i-1]" class="player d-flex justify-content-center">
@@ -45,9 +45,22 @@
 <!-- Informations about the map -->
 <div class="container-fluid text-center">
   <div class="row">
-    <div class="col-lg-3"><p>Joueurs<br />{{ map['players'] }}</p></div>
+    <div class="col-lg-3 click" (click)="onShowPlayers()"><p>Joueurs<br />{{ map['players'] }}</p></div>
     <div class="col-lg-3"><p>Morts<br />{{ map['dead_players'] }}<br></p></div>
     <div class="col-lg-3"><p>Monstres<br />{{ map['monsters'] }}<br></p></div>
     <div class="col-lg-3"><p>MAP<br>{{ map['size'] }}x{{ map['size'] }}</p></div>
+  </div>
+</div>
+
+<!-- Players -->
+<div class="row text-center text-center players" *ngIf="showPlayers">
+  <div class="col-lg-12"><span *ngFor="let player of players">[{{ player }}]</span> </div>
+</div>
+
+
+<!-- In case the player would gave up -->
+<div class="container-fluid text-center">
+  <div class="row">
+    <div class="col-lg-12"><a [routerLink]="" (click)="onGiveUp()">Je n'ai plus envie de continuer à jouer avec ce personnage ...</a></div>
   </div>
 </div>

@@ -4,7 +4,7 @@
 
     <div class="space"></div>
 
-    <input #player type="text" class="form-control margin-auto input" placeholder="Nom du joueur">
+    <input #player type="text" class="form-control margin-auto input was-validated" (keyup.enter)="onPlay(player.value)" placeholder="Nom du joueur">
     <button type="submit" class="margin-auto" (click)="onPlay(player.value)">Jouer</button>
 
 
