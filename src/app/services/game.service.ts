@@ -145,5 +145,4 @@ export class GameService {
     this.isDead = false;
   }
 
-
 }

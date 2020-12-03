@@ -5,18 +5,19 @@
     <div class="col-lg-12 text-uppercase"><h2>{{ player['name'] }}</h2></div>
   </div>
   <div class="row">
-    <div class="col-lg-6"><p>Vie : {{ player['life'] }}</p></div>
-    <div class="col-lg-6"><p>{{ player['position'] }}</p></div>
-  </div>
-  <div class="row">
-    <div class="col-lg-12"><p>{{ message }}</p></div>
+    <div class="col-lg-6"><p>Position : {{ player['position'] }}</p></div>
   </div>
 
   <!-- MAP -->
   <div class="map-all">
-    <div *ngFor="let y of [].constructor(6); let i=index" class="row">
-      <div *ngFor="let x of [].constructor(6); let j=index" id="case{{i}}-case{{j}}" class="col-lg-2 map">
-        <p *ngIf="mapScreen[i][j]">x</p>
+    <div *ngFor="let y of [].constructor(map['size']); let i=index" class="row">
+      <div *ngFor="let x of [].constructor(map['size']); let j=index" class="col-lg-2 map">
+        <span *ngIf="mapScreen[j][[].constructor(map['size']).length-i-1]" class="player d-flex justify-content-center">
+          <div class="player">
+            <span class="small player-head">{{ player['life'] }}/100</span>
+            <img src="assets/Player.gif" alt="X" class="player-img">
+          </div>
+        </span>
       </div>
     </div>
   </div>
@@ -34,6 +35,11 @@
       <div class="col-lg-12"><button [disabled]="!buttons['sud']" class="margin-auto" (click)="onMove('sud')">Sud</button></div>
     </div>
   </div>
+</div>
+
+<!-- Message -->
+<div class="row text-center">
+  <div class="col-lg-12"><p>{{ message }}</p></div>
 </div>
 
 <!-- Informations about the map -->

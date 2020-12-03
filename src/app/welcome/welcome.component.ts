@@ -19,11 +19,14 @@ export class WelcomeComponent implements OnInit {
    }
 
   async ngOnInit() {
-    // If server is not online, redirect to offline page
+    this.checkServer();
+  }
+
+  private async checkServer() {
+    // If server is not online, redirect to offline page, check each 5s
     await this.gameService.isServerOnline().then((res) => {
-      if(!res) {
-        this.router.navigate(['/', 'offline']);
-      }
+      if(!res) this.router.navigate(['/', 'offline']);
+      else setTimeout(() => this.checkServer(), 5000);
     });
   }
 

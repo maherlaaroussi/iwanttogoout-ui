@@ -18,7 +18,8 @@ interface Directions {
 export class GameComponent implements OnInit {
   isAuth = false;
   message = '';
-  mapScreen: Boolean[][];
+  mapScreen: Boolean[][] = [];
+  updateInformations = true;
 
   showButtons = true;
   buttons: Directions = {
@@ -42,31 +43,30 @@ export class GameComponent implements OnInit {
 
   constructor(private gameService: GameService, private router: Router) {
     this.syncDataLoop();
+    this.checkServer();
     this.showButtons = true;
-    this.mapScreen = [];
-    this.resetMapScreen(false);
    }
 
    private resetMapScreen(state: boolean) {
-    for(var i: number = 0; i < 5; i++) {
+     let taille = 6;
+    for(var i: number = 0; i < taille; i++) {
       this.mapScreen[i] = [];
-      for(var j: number = 0; j< 5; j++) {
+      for(var j: number = 0; j < taille; j++) {
           this.mapScreen[i][j] = state;
       }
     }
    }
 
-   private setPosition(positionString: string) {
-     this.resetMapScreen(false);
-     let positionFormated = positionString.replace('(', '').replace(')', '').split(',');
-     this.mapScreen[Number(positionFormated[0])][Number(positionFormated[1])] = true;
+  private setPosition(positionString: string) {
+    this.resetMapScreen(false);
+    let positionFormated = positionString.replace('(', '').replace(')', '').split(',');
+    this.mapScreen[Number(positionFormated[0])][Number(positionFormated[1])] = true;
    }
 
-   private getRightPosition(positionString: string) {
+  private getRightPosition(positionString: string) {
     let positionFormated = positionString.replace('(', '').replace(')', '').split(',');
     let x = positionFormated[0];
     let y = positionFormated[1];
-    // TODO: Calcul d'une formule pour obtenir la bonne position
   }
 
   async ngOnInit() {
@@ -75,16 +75,22 @@ export class GameComponent implements OnInit {
       this.router.navigate(['/']);
     }
     else {
-      this.syncData();
+      await this.syncData();
+      this.resetMapScreen(false);
+      this.setPosition(this.player['position']);
     }
-    this.setPosition(this.player['position']);
   }
 
   async syncData() {
-    await this.gameService.syncData().then((res) => { });
-    this.player = this.gameService.player;
-    this.map = this.gameService.map;
-    this.setPosition(this.player['position']);
+    // There is two checks because the request may take some times
+    if(this.updateInformations) {
+      await this.gameService.syncData().then((res) => { });
+      if(this.updateInformations) {
+        this.player = this.gameService.player;
+        this.map = this.gameService.map;
+        this.setPosition(this.player['position']);
+      }
+    }
   }
 
   private setButtons(state: boolean) {
@@ -102,20 +108,41 @@ export class GameComponent implements OnInit {
   }
 
   private win() {
+    this.updateInformations = false;
     this.message = 'Vous avez trouvé la sortie ! ...';
     this.showButtons = false;
     setTimeout(() => {
       this.message = 'Une nouvelle partie commencera dans 6 secondes.';
-      this.router.navigate(['/game']);
-    }, 6);
+    }, 6000);
+    this.router.navigate(['/game']);
+    this.showButtons = true;
+    this.updateInformations = true;
   }
 
   private dead() {
+    this.updateInformations = false;
     this.message = 'Vous êtes mort inutilement ...';
     this.showButtons = false;
     setTimeout(() => {
       this.gameService.playerDead();
     }, 1500);
+    this.updateInformations = true;
+  }
+
+  private directionBlocked(direction: string) {
+    this.buttons[direction as keyof Directions] = false;
+    let isStuck = true;
+    for(var e in this.buttons) {
+      if(this.buttons[e as keyof Directions]) {
+        isStuck = false;
+      }
+    }
+    if(isStuck) {
+      this.stuck();
+    }
+    else {
+      this.showMessage('Direction bloquée !');
+    }
   }
 
   private showMessage(message: string, reset: boolean = false) {
@@ -128,7 +155,7 @@ export class GameComponent implements OnInit {
         if(reset) {
           this.setButtons(true);
         }
-    }, 1500);
+    }, 800);
   }
 
   async onMove(direction: string) {
@@ -142,35 +169,48 @@ export class GameComponent implements OnInit {
     }
 
     await this.gameService.movePlayer(this.player['name'], direction).then((res) => {
+      this.updateInformations = false;
       // Player changed position
       if(res['position'] != this.player['position']) {
-        this.showMessage('Déplacement : ' + direction.toUpperCase(), true);
-        // Player have more life than before, so he found the exit
-        if(Number(res['life']) > Number(this.player['life'])) {
+        // 666 is wath server return if player is dead
+        if(Number(res['life']) == 666) {
+          this.dead();
+        }
+        // If monster hit the player
+        else if(Number(res['life']) < Number(this.player['life'])) {
+          let life_now = Number(this.player['life']) - Number(res['life'])
+          this.showMessage('Vous avez subit ' + life_now + ' dégats.', true);
+        }
+        // If nothing hapened
+        else if(Number(res['life']) == Number(this.player['life'])) {
+          this.showMessage('Déplacement : ' + direction.toUpperCase(), true);
+        }
+        // Player win
+        else {
+          // FIXME: Quand le joueur trouvve la sortie, il ne se passe rien ou cela se passe trop vite
           this.win();
         }
-        else if(res['life'] != this.player['life']) {
-          if(Number(res['life']) == 0) {
-            this.dead();
-          }
-          else {
-            let life_now = Number(this.player['life']) - Number(res['life'])
-            this.showMessage('Vous avez subit ' + life_now + ' dégats.', true);
-          }
-        }
       }
-      // Player not mouved
+      // Direction us blocked
       else {
-        this.buttons[direction as keyof Directions] = false;
-        this.showMessage('Direction bloquée !');
+        this.directionBlocked(direction);
       }
     });
+    this.updateInformations = true;
     this.syncData();
   }
 
   private async syncDataLoop() {
     await this.syncData();
     setTimeout(() => this.syncDataLoop(), 5000);
+  }
+
+  private async checkServer() {
+    // If server is not online, redirect to offline page, check each 5s
+    await this.gameService.isServerOnline().then((res) => {
+      if(!res) this.router.navigate(['/', 'offline']);
+      else setTimeout(() => this.checkServer(), 5000);
+    });
   }
 
 }
