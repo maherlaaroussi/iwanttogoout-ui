@@ -23,24 +23,20 @@ export class GameService {
 
   constructor(private apiService: ApiService) { }
 
-  public async isServerOnline() {
-    let res = await this.apiService.getMap().catch((res) => { return false; });
-    if(res) {
-      return true;
-    }
-    else {
-      return false;
-    }
+  public async isServerOnline(): Promise<boolean> {
+    const res = await this.apiService.getMap().catch(() => false);
+    if (res) { return true; }
+    return false;
   }
 
-  public async newPlayer(name: string) {
-    if(!name) { return false; }
-    let res: any = await this.apiService.postPlayer(name).catch((res) => { return false; });
-    if(res) {
+  public async newPlayer(name: string): Promise<any> {
+    if (!name) { return false; }
+    const res: any = await this.apiService.postPlayer(name).catch(() => false);
+    if (res) {
       this.signIn(name);
-      this.player['name'] = res['name'];
-      this.player['life'] = res['life'];
-      this.player['position'] = res['position'];
+      this.player.name = res.name;
+      this.player.life = res.life;
+      this.player.position = res.position;
       return res;
     }
     else {
@@ -49,10 +45,10 @@ export class GameService {
     }
   }
 
-  public async movePlayer(name: string, direction: string) {
-    if(!name || !direction) { return false; }
-    let res: any = await this.apiService.postPlayerMove(name, direction).catch((res) => { return false; });
-    if(res) {
+  public async movePlayer(name: string, direction: string): Promise<any> {
+    if (!name || !direction) { return false; }
+    const res: any = await this.apiService.postPlayerMove(name, direction).catch(() => false);
+    if (res) {
       this.syncData();
       return res;
     }
@@ -61,9 +57,9 @@ export class GameService {
     }
   }
 
-  public async getPlayer() {
-    let res: any = await this.apiService.getPlayer(this.player['name']).catch((res) => { return false; });
-    if(res) {
+  public async getPlayer(): Promise<any> {
+    const res: any = await this.apiService.getPlayer(this.player.name).catch(() => false);
+    if (res) {
       return res;
     }
     else {
@@ -71,11 +67,9 @@ export class GameService {
     }
   }
 
-  public async getMap() {
-    let res: any = await this.apiService.getMap().catch((res) => {
-        return false;
-      });
-    if(res) {
+  public async getMap(): Promise<any> {
+    const res: any = await this.apiService.getMap().catch(() => false);
+    if (res) {
       return res;
     }
     else {
@@ -83,11 +77,9 @@ export class GameService {
     }
   }
 
-  public async getPlayers() {
-    let res: any = await this.apiService.getPlayers().catch((res) => {
-        return false;
-      });
-    if(res) {
+  public async getPlayers(): Promise<any> {
+    const res: any = await this.apiService.getPlayers().catch(() => false);
+    if (res) {
       return res;
     }
     else {
@@ -95,9 +87,9 @@ export class GameService {
     }
   }
 
-  public async isPlayerDead() {
-    let res: any = await this.apiService.getPlayer(this.player['name']).catch((res) => { return false; });
-    if(Number(res['life']) > 0) {
+  public async isPlayerDead(): Promise<any> {
+    const res: any = await this.apiService.getPlayer(this.player.name).catch(() => false);
+    if (Number(res.life) > 0) {
       return false;
     }
     else {
@@ -105,42 +97,42 @@ export class GameService {
     }
   }
 
-  public async syncData() {
-    let p: any = await this.apiService.getPlayer(this.player['name']).catch((res) => { });
-    if(p) {
-      this.player['name'] = p['name'];
-      this.player['life'] = p['life'];
-      this.player['position'] = p['position'];
+  public async syncData(): Promise<void> {
+    const p: any = await this.apiService.getPlayer(this.player.name).catch(() => { });
+    if (p) {
+      this.player.name = p.name;
+      this.player.life = p.life;
+      this.player.position = p.position;
     }
 
-    let m: any = await this.apiService.getMap().catch((res) => { });
-    if(m) {
-      this.map['size'] = m['taille'];
-      this.map['players'] = m['joueurs'];
-      this.map['dead_players'] = m['joueurs_morts'];
-      this.map['monsters'] = m['monstres'];
+    const m: any = await this.apiService.getMap().catch((res) => { });
+    if (m) {
+      this.map.size = m.taille;
+      this.map.players = m.joueurs;
+      this.map.dead_players = m.joueurs_morts;
+      this.map.monsters = m.monsters;
     }
 
-    let players: any = await this.apiService.getMap().catch((res) => { });
-    if(players) {
-      this.players = players['joueurs'];
+    const players: any = await this.apiService.getMap().catch((res) => { });
+    if (players) {
+      this.players = players.joueurs;
     }
   }
 
-  public signOut() {
+  public signOut(): void {
     this.isAuth = false;
   }
 
-  public signIn(name: string) {
+  public signIn(name: string): void {
     this.isAuth = true;
   }
 
-  public playerDead() {
+  public playerDead(): void {
     this.isAuth = true;
     this.isDead = true;
   }
 
-  public restart() {
+  public restart(): void {
     this.isAuth = false;
     this.isDead = false;
   }
