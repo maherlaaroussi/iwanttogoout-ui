@@ -3,7 +3,7 @@
 <p align="center">
   <img src="src/favicon.png" alt="iwtgo-ui-logo" width="120px" height="120px"/>
   <br>
-  <i>IWTGO est un jeu de labyrinthe où il faut souffrir, et même mourrir, pour sortir.
+  <i>IWTGO est un jeu de labyrinthe où il faut souffrir, et même mourrir, pour sortir (ce n'est pas sûr ...).
   <br>
 </p>
 
