@@ -25,20 +25,20 @@
 
 ### Pré-requis
 
-- Installer [Node.js] qui contient [Node Package Manager][npm].
-- Installer Angular/CLI.
+- Installation de [Node.js] contenant [Node Package Manager][npm].
+- Installation d'Angular/CLI.
 
-### Installer les dépendances
+### Installation des dépendances
 ```
 npm install
 ```
 
-### Lancer le serveur Scala
+### Lancement du serveur Scala
 ```
 sbt run
 ```
 
-### Lancer l'application
+### Lancemznt de l'application
 
 ```
 ng serve
@@ -49,10 +49,13 @@ ng serve
 ### Composants
 
 #### welcome
+Composant principal et d'accueil de l'application. Il permet la création d'un joueur.
 
 #### server-offline
+Composant affiché lorsque le serveur scala n'est pas en ligne.
 
 #### game
+Composant principale du jeu, là où toute la logique est traitée ainsi que la vue de la map et des informations du et des joueurs.
 
 
 ### Routes
