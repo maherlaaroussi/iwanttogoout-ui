@@ -55,14 +55,14 @@ Composant principal et d'accueil de l'application. Il permet la création d'un j
 Composant affiché lorsque le serveur scala n'est pas en ligne.
 
 #### game
-Composant principale du jeu, là où toute la logique est traitée ainsi que la vue de la map et des informations du/des joueurs.
+Composant principale du jeu, là où toute la logique est traitée ainsi que la vue de la map et des informations du/des joueur(s).
 
 
 ### Routes
 
-- `/` : vue d'accueil qui permet à l'ytilisateur de créer un joueur.
-- `/offline` : vue qui est affiché lorsque le serveur scala est hors ligne.
-- `/game` : vue qui affichera le jeu.
+- `/` : Vue d'accueil qui permet à l'utilisateur de créer un joueur.
+- `/offline` : Vue qui est affichée lorsque le serveur scala est hors ligne.
+- `/game` : Vue qui affichera le jeu.
 
 
 [ng]: https://angular.io
