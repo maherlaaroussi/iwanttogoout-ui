@@ -55,7 +55,7 @@ Composant principal et d'accueil de l'application. Il permet la création d'un j
 Composant affiché lorsque le serveur scala n'est pas en ligne.
 
 #### game
-Composant principale du jeu, là où toute la logique est traitée ainsi que la vue de la map et des informations du et des joueurs.
+Composant principale du jeu, là où toute la logique est traitée ainsi que la vue de la map et des informations du/des joueurs.
 
 
 ### Routes
