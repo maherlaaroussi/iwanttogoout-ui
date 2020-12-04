@@ -3,7 +3,7 @@
 <p align="center">
   <img src="src/favicon.png" alt="iwtgo-ui-logo" width="120px" height="120px"/>
   <br>
-  <i>IWTGO est un jeu de labyrinthe où il faut souffrir, et même mourrir, pour sortir (ce n'est pas sûr ...).
+  <i>IWTGO est un jeu de labyrinthe où il faut souffrir, et même mourrir, pour sortir (mais ce n'est pas sûr ...).
   <br>
 </p>
 
@@ -38,7 +38,7 @@ npm install
 sbt run
 ```
 
-### Lancemznt de l'application
+### Lancement de l'application
 
 ```
 ng serve
