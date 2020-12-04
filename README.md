@@ -1,26 +1,68 @@
-# IWTGO-UI
+<h1 align="center">I Want To Go Out - UI</h1>
 
-Ce projet fonctionne avec le serveur : `https://gitlab.com/maherlaaroussi/iwanttogoout`.
-## Development server
+<p align="center">
+  <img src="src/favicon.png" alt="iwtgo-ui-logo" width="120px" height="120px"/>
+  <br>
+  <i>IWTGO est un jeu de labyrinthe où il faut souffrir, et même mourrir, pour sortir.
+  <br>
+</p>
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+<p align="center">
+  <a href="https://gitlab.com/maherlaaroussi/iwanttogoout"><strong>https://gitlab.com/maherlaaroussi/iwanttogoout</strong></a>
+  <br>
+</p>
 
-## Code scaffolding
+<hr>
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Sections
 
-## Build
+- Installation
+- Architecture
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+<hr>
 
-## Running unit tests
+## Installation
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Pré-requis
 
-## Running end-to-end tests
+- Installer [Node.js] qui contient [Node Package Manager][npm].
+- Installer Angular/CLI.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+### Installer les dépendances
+```
+npm install
+```
 
-## Further help
+### Lancer le serveur Scala
+```
+sbt run
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Lancer l'application
+
+```
+ng serve
+```
+
+## Architecture
+
+### Composants
+
+#### welcome
+
+#### server-offline
+
+#### game
+
+
+### Routes
+
+- `/` : vue d'accueil qui permet à l'ytilisateur de créer un joueur.
+- `/offline` : vue qui est affiché lorsque le serveur scala est hors ligne.
+- `/game` : vue qui affichera le jeu.
+
+
+[ng]: https://angular.io
+[cli]: https://cli.angular.io/
+[node.js]: https://nodejs.org/
+[npm]: https://www.npmjs.com/get-npm
