@@ -9,7 +9,6 @@ import { from } from 'rxjs';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { ServerOfflineComponent } from './server-offline/server-offline.component';
 import { GameComponent } from './game/game.component';
-import { AuthComponent } from './auth/auth.component';
 import { RouterModule, Routes } from '@angular/router';
 
 import { GameService } from './services/game.service';
@@ -28,7 +27,6 @@ const appRoutes: Routes = [
     WelcomeComponent,
     ServerOfflineComponent,
     GameComponent,
-    AuthComponent,
     GameComponent,
   ],
   imports: [
