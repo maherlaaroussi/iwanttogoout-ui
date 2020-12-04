@@ -5,11 +5,10 @@ import { GameService } from './services/game.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-
-  constructor(private gameService: GameService, private router: Router) { }
+  constructor(private gameService: GameService, private router: Router) {}
 
   ngOnInit(): void {
     // If server is not online, navigate to offline page
@@ -17,5 +16,4 @@ export class AppComponent implements OnInit {
       this.router.navigate(['/', 'offline']);
     }
   }
-
 }

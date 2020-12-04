@@ -46,6 +46,15 @@ ng serve
 
 ## Architecture
 
+### Services
+
+#### api
+L'API communiquant avec le serveur scala.
+
+#### game
+Service intéragissant avec l'API pour toute action et traitement de données.
+
+
 ### Composants
 
 #### welcome

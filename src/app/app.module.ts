@@ -15,10 +15,10 @@ import { GameService } from './services/game.service';
 import { ApiService } from './services/api.service';
 
 const appRoutes: Routes = [
-  { path: 'game', component: GameComponent},
-  { path: 'start', component: WelcomeComponent},
-  { path: 'offline', component: ServerOfflineComponent},
-  { path: '', component: WelcomeComponent}
+  { path: 'game', component: GameComponent },
+  { path: 'start', component: WelcomeComponent },
+  { path: 'offline', component: ServerOfflineComponent },
+  { path: '', component: WelcomeComponent },
 ];
 
 @NgModule({
@@ -34,12 +34,9 @@ const appRoutes: Routes = [
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
   ],
-  providers: [
-    ApiService,
-    GameService
-  ],
-  bootstrap: [AppComponent]
+  providers: [ApiService, GameService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
